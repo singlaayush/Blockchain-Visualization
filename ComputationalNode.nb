@@ -1,0 +1,599 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 11.1' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     25692,        591]
+NotebookOptionsPosition[     22752,        540]
+NotebookOutlinePosition[     23138,        557]
+CellTagsIndexPosition[     23095,        554]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Blockchain Simulation - Computational Node", "Title",
+ CellChangeTimes->{{3.70826784064753*^9, 3.708267849634144*^9}, {
+   3.708339728330616*^9, 3.708339733155821*^9}, {3.708344564409631*^9, 
+   3.708344566226047*^9}, 
+   3.708353229010137*^9},ExpressionUUID->"6cac3145-b4c8-421b-94f7-\
+4afb421f8169"],
+
+Cell[TextData[StyleBox["~ Ayush Singla",
+ FontColor->GrayLevel[0.5]]], "Chapter",
+ CellChangeTimes->{{3.708267855891389*^9, 
+  3.708267861378395*^9}},ExpressionUUID->"e35ab07d-61cc-4a6e-b680-\
+68a34bb54050"],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["Initialization", "Title"]], "Chapter",
+ CellChangeTimes->{{3.708099683640377*^9, 
+  3.708099689861327*^9}},ExpressionUUID->"ecbe384c-0958-4c03-bda7-\
+2b5892331eb5"],
+
+Cell["\<\
+The following statements initialize the Channel and their Listeners. 
+Create new channels for the variables, you will not be able to use my \
+Channels. Once you create them, copy the ChannelObjects into the Listeners \
+and you\[CloseCurlyQuote]ll have them working in no time. An example is down \
+below.
+I highly recommend renaming these variables for different nodes to avoid \
+errors.\
+\>", "Text",
+ CellChangeTimes->{{3.708339869162878*^9, 3.708340001968628*^9}, {
+  3.70834241555134*^9, 3.708342523622216*^9}, {3.708342754840361*^9, 
+  3.708342766016202*^9}},ExpressionUUID->"12c9043c-f72c-4651-ba8a-\
+0e7f6b77c00b"],
+
+Cell["\<\
+Copy the output above, and paste it in the blockChannelListener.\
+\>", "Text",
+ CellChangeTimes->{{3.708342772948485*^9, 
+  3.7083428028111134`*^9}},ExpressionUUID->"01de567f-cf73-4957-a275-\
+e393beddf7e6"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"pingChannel", " ", "=", " ", 
+  RowBox[{"CreateChannel", "[", "\"\<PingChannel\>\"", "]"}]}]], "Input",
+ CellChangeTimes->{{3.708036331899893*^9, 3.708036349364585*^9}, 
+   3.708082025880662*^9, {3.708342554928749*^9, 3.708342566478455*^9}},
+ FontFamily->"Source Code Pro",
+ FontSize->13,
+ FontWeight->"Regular",ExpressionUUID->"c34d632a-fba1-4e32-a9d8-cc9cd3cd9f6f"],
+
+Cell[BoxData[
+ RowBox[{"ChannelObject", 
+  "[", "\<\"https://channelbroker.wolframcloud.com/users/ayushsingla.as@gmail.\
+com/PingChannel\"\>", "]"}]], "Output",
+ CellChangeTimes->{
+  3.708342567208188*^9},ExpressionUUID->"62d86fab-b7d8-40e9-a7ca-\
+efb95466da3f"]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{"blockChannelListener", " ", "=", " ", 
+  RowBox[{"ChannelListen", "[", 
+   RowBox[{
+   "ChannelObject", "[", 
+    "\"\<https://channelbroker.wolframcloud.com/users/ayushsingla.as@gmail.\
+com/BlockChannel\>\"", "]"}], " ", "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+    "Remove", " ", "this", " ", "and", " ", "paste", " ", "your", " ", 
+     "object", " ", 
+     RowBox[{"here", "."}]}], " ", "*)"}], "\[IndentingNewLine]", 
+   "]"}]}]], "Input",
+ CellChangeTimes->{{3.708027564631328*^9, 3.708027570322386*^9}, 
+   3.7081031380733767`*^9, 3.708342663866534*^9, {3.7083428190060863`*^9, 
+   3.7083428658913803`*^9}},
+ FontFamily->"Source Code Pro",
+ FontSize->13,
+ FontWeight->"Regular",ExpressionUUID->"58467489-527a-4305-9f30-810baef67e38"],
+
+Cell[BoxData[
+ RowBox[{"memoryChannelListener", " ", "=", " ", "\[IndentingNewLine]", 
+  RowBox[{"ChannelListen", "[", "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", "\[IndentingNewLine]", 
+    RowBox[{
+    "Copy", " ", "the", " ", "output", " ", "from", " ", "the", " ", 
+     "memoryChannel", " ", "from", " ", "the", " ", "Guest", " ", "Node", " ", 
+     RowBox[{"here", "."}]}], " ", "\[IndentingNewLine]", "*)"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+   "ChannelObject", "[", 
+    "\"\<https://channelbroker.wolframcloud.com/users/ayushsingla.as@gmail.\
+com/MemoryChannel\>\"", "]"}], "\[IndentingNewLine]", "]"}]}]], "Input",
+ CellChangeTimes->{{3.70808203906469*^9, 3.708082054151511*^9}, {
+   3.7080821030087748`*^9, 3.708082114515238*^9}, 3.708103170907181*^9, 
+   3.708342712760243*^9, {3.7083430891198997`*^9, 3.708343145069571*^9}},
+ FontFamily->"Source Code Pro",
+ FontSize->13,
+ FontWeight->"Regular",ExpressionUUID->"dda7a279-60c1-4916-8e39-e554e47c454d"],
+
+Cell["\<\
+Change the values of the following variables as per your system.\
+\>", "Text",
+ CellChangeTimes->{{3.708340088489313*^9, 
+  3.7083401107722387`*^9}},ExpressionUUID->"ab744f8d-4260-462e-9ecd-\
+a46673d98132"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"blockNumber", " ", "=", " ", "2"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"mempool", " ", ":=", " ", 
+   RowBox[{"memoryChannelListener", "[", "\"\<Message\>\"", "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"prevHash", " ", ":=", " ", 
+    RowBox[{
+     RowBox[{"ToExpression", "[", 
+      RowBox[{"Import", "[", 
+       RowBox[{"Last", "[", 
+        RowBox[{"FileNames", "[", 
+         RowBox[{
+         "\"\<*.txt\>\"", ",", 
+          "\"\</Users/AyushSingla/Work/Wolfram/Camp/Blockchain \
+Network/Nodes/2\>\""}], "]"}], "]"}], "]"}], "]"}], "\[LeftDoubleBracket]", 
+     "2", "\[RightDoubleBracket]"}]}], ";"}], " "}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"pattern", " ", "=", " ", "\"\<000\>\""}], ";"}]}], "Input",
+ CellChangeTimes->{{3.708027102152721*^9, 3.708027106851252*^9}, {
+   3.7080271484565353`*^9, 3.708027169411736*^9}, 3.708028467880742*^9, {
+   3.708031522700486*^9, 3.7080315448727007`*^9}, {3.708032891451302*^9, 
+   3.7080329231507177`*^9}, {3.708033018987083*^9, 3.708033033208761*^9}, 
+   3.708033074270267*^9, {3.708033107404523*^9, 3.708033118539843*^9}, {
+   3.708082160022559*^9, 3.708082191779245*^9}, 3.70808234929097*^9, {
+   3.708084027857914*^9, 3.7080840290873833`*^9}, {3.708099776722658*^9, 
+   3.7080997771750307`*^9}, 3.708100510567553*^9, {3.708101458977995*^9, 
+   3.7081014609724293`*^9}, {3.7081021099877787`*^9, 
+   3.7081021135464697`*^9}, {3.708102707942129*^9, 3.708102728518137*^9}, 
+   3.708102828969219*^9, 3.708103170915024*^9, {3.7081032361886044`*^9, 
+   3.708103236266481*^9}, {3.708169590446766*^9, 3.708169590488585*^9}, {
+   3.708249246459852*^9, 3.708249246853362*^9}, {3.708340062940548*^9, 
+   3.7083400865800867`*^9}, 3.708342712765732*^9},
+ FontFamily->"Source Code Pro",
+ FontSize->13,
+ FontWeight->"Regular",ExpressionUUID->"9f2d72a6-6285-4f2b-978a-dc0c60cdcdb1"],
+
+Cell[TextData[StyleBox["This is where the magic happens. ", "Section"]], \
+"Text",
+ CellChangeTimes->{{3.7083402021532793`*^9, 
+  3.708340246538485*^9}},ExpressionUUID->"5db6031b-8c1e-4677-a129-\
+a81ad8f39254"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Mine", "[", 
+   RowBox[{"prevHash_", ",", " ", "data_", ",", " ", "patt_"}], "]"}], ":=", 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+    "This", " ", "is", " ", "the", " ", "main", " ", "loop", " ", "where", 
+     " ", "the", " ", "actual", " ", "Mining", " ", "takes", " ", 
+     RowBox[{"place", ".", " ", "It"}], " ", "takes", " ", "a", " ", "random",
+      " ", "nonce", " ", 
+     RowBox[{"(", 
+      RowBox[{"you", " ", "can", " ", "change", " ", "this"}], ")"}]}], ",", 
+    " ", 
+    RowBox[{
+    "and", " ", "keeps", " ", "looping", " ", "till", " ", "it", " ", 
+     "reaches", " ", "a", " ", "hash", " ", "which", " ", "matches", " ", 
+     "the", " ", "pattern", " ", "or"}], ",", " ", 
+    RowBox[{
+    "some", " ", "other", " ", "block", " ", "is", " ", "done", " ", "before",
+      " ", "it", " ", 
+     RowBox[{"is", ".", " ", "It"}], " ", "checks", " ", "the", " ", "last", 
+     " ", "condition", " ", "by", " ", "comparing", " ", "previous", " ", 
+     "hash", " ", "to", " ", "the", " ", "current", " ", "previous", " ", 
+     "hash", " ", "in", " ", "the", " ", 
+     RowBox[{"BlockChannel", "."}]}]}], "\[IndentingNewLine]", "*)"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{"Module", "[", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"localnonce", " ", "=", " ", 
+      RowBox[{"RandomInteger", "[", 
+       RowBox[{"{", 
+        RowBox[{"1", ",", "1000"}], "}"}], "]"}]}], "}"}], ",", 
+    "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"While", " ", "[", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"StringTake", "[", 
+           RowBox[{
+            RowBox[{"IntegerString", "[", 
+             RowBox[{
+              RowBox[{"Hash", "[", 
+               RowBox[{
+                RowBox[{"prevHash", "<>", 
+                 RowBox[{"ToString", "[", "data", "]"}], "<>", 
+                 RowBox[{"ToString", "[", "localnonce", "]"}]}], ",", 
+                "\"\<SHA256\>\""}], "]"}], ",", "16", ",", "64"}], "]"}], ",", 
+            RowBox[{"StringLength", "[", "patt", "]"}]}], "]"}], "=!=", 
+          "patt"}], ")"}], "&&", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"blockChannelListener", "[", "\"\<Message\>\"", "]"}], "[", 
+           RowBox[{"[", "2", "]"}], "]"}], "\[Equal]", "prevHash"}], ")"}]}], 
+       ",", "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"localnonce", "++"}], ";"}]}], "\[IndentingNewLine]", "]"}], 
+     ";", "\[IndentingNewLine]", 
+     RowBox[{"(*", "\[IndentingNewLine]", 
+      RowBox[{
+      "This", " ", "if", " ", "statement", " ", "checks", " ", "if", " ", 
+       "this", " ", "node", " ", "was", " ", "the", " ", "one", " ", "which", 
+       " ", "calculated", " ", "the", " ", 
+       RowBox[{"hash", "."}]}], "\[IndentingNewLine]", "*)"}], 
+     "\[IndentingNewLine]", 
+     RowBox[{"If", "[", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"blockChannelListener", "[", "\"\<Message\>\"", "]"}], "[", 
+          
+          RowBox[{"[", "2", "]"}], "]"}], "\[Equal]", "prevHash"}], ")"}], 
+       ",", "\[IndentingNewLine]", 
+       RowBox[{"(*", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"Case", " ", "1"}], " ", "\[Rule]", " ", 
+          RowBox[{"This", " ", "node", " ", "computed", " ", "the", " ", 
+           RowBox[{"hash", ".", "\[IndentingNewLine]", "In"}], " ", "this", 
+           " ", "case"}]}], ",", " ", 
+         RowBox[{"we", " ", "make", " ", "the", " ", "new", " ", "list"}], 
+         ",", " ", 
+         RowBox[{
+         "with", " ", "the", " ", "current", " ", "data", " ", "and", " ", 
+          "hash"}], ",", " ", 
+         RowBox[{
+         "send", " ", "it", " ", "on", " ", "the", " ", "BlockChannel"}], ",",
+          " ", 
+         RowBox[{
+         "and", " ", "save", " ", "it", " ", "in", " ", "our", " ", "node", 
+          " ", 
+          RowBox[{"folder", "."}]}]}], "\[IndentingNewLine]", "*)"}], 
+       "\[IndentingNewLine]", 
+       RowBox[{"Module", "[", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"{", "}"}], ",", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"currHash", " ", "=", " ", 
+           RowBox[{"IntegerString", "[", 
+            RowBox[{
+             RowBox[{"Hash", "[", 
+              RowBox[{
+               RowBox[{"prevHash", "<>", 
+                RowBox[{"ToString", "[", "mempool", "]"}], "<>", 
+                RowBox[{"ToString", "[", "localnonce", "]"}]}], ",", 
+               "\"\<SHA256\>\""}], "]"}], ",", "16", ",", "64"}], "]"}]}], 
+          ";", "\[IndentingNewLine]", 
+          RowBox[{"list", " ", "=", " ", 
+           RowBox[{"Flatten", "[", 
+            RowBox[{"List", "[", 
+             RowBox[{
+             "blockNumber", ",", " ", "currHash", ",", " ", "localnonce", ",",
+               " ", "data"}], "]"}], "]"}]}], ";", "\[IndentingNewLine]", " ", 
+          RowBox[{"ChannelSend", "[", 
+           RowBox[{"blockChannel", ",", " ", "list"}], "]"}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{"Save", "[", 
+           RowBox[{
+            RowBox[{"FileNameJoin", "[", 
+             RowBox[{"{", 
+              RowBox[{
+              "\"\</Users/AyushSingla/Work/Wolfram/Camp/Blockchain \
+Network/Nodes/2\>\"", ",", 
+               RowBox[{
+                RowBox[{"ToString", "@", 
+                 RowBox[{"UnixTime", "[", "]"}]}], "<>", "\"\<.txt\>\""}]}], 
+              "}"}], "]"}], ",", "list"}], "]"}], ";", "\[IndentingNewLine]", 
+          
+          RowBox[{"ChannelSend", "[", 
+           RowBox[{"pingChannel", ",", " ", "True"}], "]"}], ";"}]}], 
+        "\[IndentingNewLine]", "]"}], ",", " ", "\[IndentingNewLine]", 
+       RowBox[{"(*", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"Case", " ", "2"}], " ", "\[Rule]", " ", 
+          RowBox[{
+          "This", " ", "node", " ", "did", " ", "not", " ", "compute", " ", 
+           "the", " ", 
+           RowBox[{"hash", ".", "\[IndentingNewLine]", "In"}], " ", "this", 
+           " ", "case"}]}], ",", " ", 
+         RowBox[{"we", " ", "grab", " ", "the", " ", "current", " ", "list"}],
+          ",", " ", 
+         RowBox[{
+         "with", " ", "the", " ", "calculated", " ", "hash", " ", "and", " ", 
+          "data"}], ",", " ", 
+         RowBox[{
+         "and", " ", "save", " ", "it", " ", "in", " ", "our", " ", "node", 
+          " ", 
+          RowBox[{"folder", "."}]}]}], "\[IndentingNewLine]", "*)"}], 
+       "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"Module", "[", 
+         RowBox[{
+          RowBox[{"{", "}"}], ",", " ", "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{"list", " ", "=", " ", 
+            RowBox[{"blockChannelListener", "[", "\"\<Message\>\"", "]"}]}], 
+           ";", 
+           RowBox[{"Save", "[", 
+            RowBox[{
+             RowBox[{"FileNameJoin", "[", 
+              RowBox[{"{", 
+               RowBox[{
+               "\"\</Users/AyushSingla/Work/Wolfram/Camp/Blockchain \
+Network/Nodes/2\>\"", ",", 
+                RowBox[{
+                 RowBox[{"ToString", "@", 
+                  RowBox[{"UnixTime", "[", "]"}]}], "<>", "\"\<.txt\>\""}]}], 
+               "}"}], "]"}], ",", "list"}], "]"}], ";"}]}], 
+         "\[IndentingNewLine]", "]"}], ";"}]}], "\[IndentingNewLine]", "]"}], 
+     ";"}]}], "\[IndentingNewLine]", "]"}]}]], "Input",
+ CellChangeTimes->{{3.7080272092575912`*^9, 3.708027213969863*^9}, {
+   3.708027674718142*^9, 3.7080277146816597`*^9}, {3.708027774523718*^9, 
+   3.708027818603442*^9}, 3.708028039039126*^9, 3.708028162052369*^9, {
+   3.708028279831003*^9, 3.7080282852896843`*^9}, {3.708028323962578*^9, 
+   3.708028332808988*^9}, {3.708028483797432*^9, 3.708028508828285*^9}, {
+   3.708028554220541*^9, 3.708028594668797*^9}, {3.708028759845961*^9, 
+   3.708028772277948*^9}, {3.708028807375828*^9, 3.708028829234046*^9}, {
+   3.708032676367786*^9, 3.708032692528693*^9}, {3.708032728622829*^9, 
+   3.708032742156159*^9}, {3.708032859286046*^9, 3.708032860162487*^9}, {
+   3.708033238651108*^9, 3.7080332640167503`*^9}, {3.708033395903562*^9, 
+   3.70803341111862*^9}, {3.708033453455551*^9, 3.7080334735633373`*^9}, {
+   3.708033619296432*^9, 3.70803365892908*^9}, {3.7080336969811897`*^9, 
+   3.708033699924629*^9}, {3.708033748435166*^9, 3.708033787081752*^9}, {
+   3.70803465782625*^9, 3.708034659173705*^9}, {3.708036377144106*^9, 
+   3.708036382102477*^9}, {3.7080364378598633`*^9, 3.708036468564384*^9}, 
+   3.708036535673018*^9, 3.708077517729733*^9, {3.7080776485143137`*^9, 
+   3.708077660105054*^9}, 3.7080777558021927`*^9, {3.708078031672763*^9, 
+   3.708078033814938*^9}, {3.708078191480226*^9, 3.708078192580915*^9}, {
+   3.7081006751246643`*^9, 3.70810070372899*^9}, {3.708100752546385*^9, 
+   3.708100799989512*^9}, {3.708102435445751*^9, 3.708102462446608*^9}, {
+   3.708102633382029*^9, 3.7081026411854973`*^9}, {3.708102684134594*^9, 
+   3.708102687435964*^9}, {3.7081027363061047`*^9, 3.7081027372288437`*^9}, {
+   3.708103138081687*^9, 3.708103138091547*^9}, {3.7081043716441593`*^9, 
+   3.7081043717971497`*^9}, {3.708118401410623*^9, 3.708118401467415*^9}, {
+   3.708118604062359*^9, 3.708118628224111*^9}, 3.708170851079537*^9, 
+   3.7081832506233053`*^9, {3.7082520916304092`*^9, 3.708252091947938*^9}, {
+   3.708340266847805*^9, 3.7083406272562037`*^9}, {3.708342670317795*^9, 
+   3.7083426760985727`*^9}},
+ FontFamily->"Source Code Pro",
+ FontSize->13,
+ FontWeight->"Regular",ExpressionUUID->"1c311813-1778-48ed-b61f-e8d83399ee40"],
+
+Cell["A wrapper to run as many cycles of Mine as you\[CloseCurlyQuote]d \
+like.", "Text",
+ CellChangeTimes->{{3.708340901999192*^9, 3.708340917298348*^9}},
+ FontFamily->"Source Code Pro",
+ FontSize->13,
+ FontWeight->"Regular",ExpressionUUID->"8dece83f-18ae-4b6f-8c1e-4b528c416321"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"ComputationalNode", "[", "it_", "]"}], " ", ":=", " ", 
+   RowBox[{"Do", "[", 
+    RowBox[{
+     RowBox[{"With", "[", 
+      RowBox[{
+       RowBox[{"{", "}"}], ",", " ", 
+       RowBox[{
+        RowBox[{"Pause", "[", "1", "]"}], ";", " ", 
+        RowBox[{"Mine", "[", 
+         RowBox[{"prevHash", ",", " ", "mempool", ",", " ", "pattern"}], 
+         "]"}]}]}], "]"}], ",", " ", "it"}], "]"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.7081002766057367`*^9, 3.708100302569358*^9}, {
+   3.708100442265678*^9, 3.708100503138648*^9}, {3.7081005379995623`*^9, 
+   3.70810058841315*^9}, {3.708101163269017*^9, 3.7081011877233047`*^9}, {
+   3.708171331463401*^9, 3.7081713351315603`*^9}, {3.7081713786280537`*^9, 
+   3.708171405247621*^9}, {3.708171682292849*^9, 3.708171698329083*^9}, {
+   3.708171758437296*^9, 3.7081717604512253`*^9}, {3.708199687006564*^9, 
+   3.708199773193659*^9}, 3.708249057538505*^9, {3.7082506558537807`*^9, 
+   3.708250690632897*^9}, {3.708266545710705*^9, 3.708266551033574*^9}, 
+   3.708377650538121*^9},
+ FontFamily->"Source Code Pro",
+ FontSize->13,
+ FontWeight->"Regular",ExpressionUUID->"258748e8-1e2f-4b42-ac1c-aff65a3f5876"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["Debugging Statements", "Title"]], "Chapter",
+ CellChangeTimes->{{3.7081685397340307`*^9, 3.708168542984226*^9}, {
+  3.708172905844915*^9, 3.7081729083093777`*^9}, {3.708377702728517*^9, 
+  3.708377704704975*^9}},ExpressionUUID->"595a7565-0632-4ed6-864b-\
+76156606da60"],
+
+Cell["\<\
+Some debugging statements you might find useful if you run into errors. \
+\>", "Text",
+ CellChangeTimes->{{3.7083409591177273`*^9, 
+  3.708340985579282*^9}},ExpressionUUID->"184d61a4-1f9c-4821-830d-\
+7e845e54cc7d"],
+
+Cell[BoxData[
+ RowBox[{"Dynamic", "[", "mempool", "]"}]], "Input",
+ CellChangeTimes->{{3.708101145500641*^9, 3.70810114705914*^9}, {
+  3.708106163509424*^9, 3.708106167767365*^9}},
+ FontFamily->"Source Code Pro",
+ FontSize->13,
+ FontWeight->"Regular",ExpressionUUID->"413785b6-0d47-4939-b519-81e381aff34c"],
+
+Cell[BoxData[
+ RowBox[{"Dynamic", "[", "prevHash", "]"}]], "Input",
+ CellChangeTimes->{{3.708104189603752*^9, 3.708104194924762*^9}, {
+  3.708106170814036*^9, 3.708106174923553*^9}},
+ FontFamily->"Source Code Pro",
+ FontSize->13,
+ FontWeight->"Regular",ExpressionUUID->"696a1864-730d-4532-a5d1-22240861cc0f"],
+
+Cell[BoxData[
+ RowBox[{"Dynamic", "[", 
+  RowBox[{
+   RowBox[{"blockChannelListener", "[", "\"\<Message\>\"", "]"}], "[", 
+   RowBox[{"[", "2", "]"}], "]"}], "]"}]], "Input",
+ CellChangeTimes->{{3.708269075712472*^9, 3.7082690799796143`*^9}, {
+   3.7082724823736067`*^9, 3.708272483863525*^9}, 3.708342678543806*^9},
+ FontFamily->"Source Code Pro",
+ FontSize->13,
+ FontWeight->"Regular",ExpressionUUID->"2d756042-811c-4378-91b6-d3ec588eca5c"],
+
+Cell["Run these two statements to \[OpenCurlyQuote]reset\[CloseCurlyQuote] \
+the channels.", "Text",
+ CellChangeTimes->{{3.708341228548603*^9, 3.708341238817502*^9}, {
+  3.708341689621821*^9, 
+  3.7083417006792717`*^9}},ExpressionUUID->"94165427-ad67-4fa3-9332-\
+2e7ed1d8d616"],
+
+Cell[BoxData[
+ RowBox[{"ChannelSend", "[", 
+  RowBox[{"pingChannel2", ",", " ", "False"}], "]"}]], "Input",
+ CellChangeTimes->{{3.70827221246388*^9, 3.708272222927123*^9}, {
+  3.708341036619001*^9, 3.7083410400557737`*^9}},
+ FontFamily->"Source Code Pro",
+ FontSize->13,
+ FontWeight->"Regular",ExpressionUUID->"8c9a8225-bf08-415f-9e99-a3c23e4118b2"],
+
+Cell[BoxData[
+ RowBox[{"ChannelSend", "[", 
+  RowBox[{"blockChannel2", ",", " ", 
+   RowBox[{"ToExpression", "[", 
+    RowBox[{"Import", "[", 
+     RowBox[{"Last", "[", "\[IndentingNewLine]", 
+      RowBox[{"FileNames", "[", 
+       RowBox[{
+       "\"\<*.txt\>\"", ",", 
+        "\"\</Users/AyushSingla/Work/Wolfram/Camp/Blockchain \
+Network/Nodes/1\>\""}], "]"}], "\[IndentingNewLine]", "]"}], "]"}], "]"}]}], 
+  "]"}]], "Input",
+ CellChangeTimes->{
+  3.708027440757276*^9, {3.7080287200977793`*^9, 3.708028720972288*^9}, {
+   3.708036501350119*^9, 3.7080365121361313`*^9}, {3.708084042631425*^9, 
+   3.7080840463021193`*^9}, {3.708183719692259*^9, 3.708183731165443*^9}, {
+   3.70826930746979*^9, 3.708269308077726*^9}, 3.708272194109517*^9, {
+   3.7083410423264093`*^9, 3.708341080648157*^9}},
+ FontFamily->"Source Code Pro",
+ FontSize->13,
+ FontWeight->"Regular",ExpressionUUID->"225318e6-802f-448c-bba3-02e98dc9cecc"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["Playground", "Title"]], "Chapter",
+ CellChangeTimes->{{3.7080997036789627`*^9, 
+  3.708099708858552*^9}},ExpressionUUID->"0985e92d-f52b-422f-b367-\
+88beffee5e01"],
+
+Cell["\<\
+Run this to execute the node! Modify the offset depending on the BlockNumber. \
+You will have to execute the nodes manually on each kernel. Try and be fast!\
+\>", "Text",
+ CellChangeTimes->{{3.708341707855864*^9, 3.708341726369623*^9}, {
+  3.7083417625435047`*^9, 
+  3.70834185311442*^9}},ExpressionUUID->"5f1a787f-b33a-4259-b26c-\
+aceefa7011f8"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"offset", " ", "=", " ", "2.5"}], ";"}]], "Input",
+ FontFamily->"Source Code Pro",
+ FontWeight->"Regular",ExpressionUUID->"45b812b7-1eb9-4af2-8a79-75d9cd872366"],
+
+Cell[BoxData[
+ RowBox[{"With", "[", 
+  RowBox[{
+   RowBox[{"{", "}"}], ",", " ", 
+   RowBox[{
+    RowBox[{"Pause", "[", "offset", "]"}], ";", " ", 
+    RowBox[{"ComputationalNode", "[", "2", "]"}]}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.70817149826853*^9, 3.708171521115797*^9}, 
+   3.708184775989991*^9, 3.7082505235449667`*^9, {3.7082601843176947`*^9, 
+   3.708260184343522*^9}, {3.708267671888269*^9, 3.708267671983593*^9}, {
+   3.708341728214007*^9, 3.708341742107882*^9}},
+ FontFamily->"Source Code Pro",
+ FontSize->13,
+ FontWeight->"Regular",ExpressionUUID->"eb2626c8-4ebb-4fd1-813b-0026638449f6"]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{1229, 687},
+WindowMargins->{{Automatic, 219}, {Automatic, 0}},
+Magnification:>0.75 Inherited,
+FrontEndVersion->"11.3 for Mac OS X x86 (32-bit, 64-bit Kernel) (March 5, \
+2018)",
+StyleDefinitions->"Monokai.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 307, 5, 75, "Title",ExpressionUUID->"6cac3145-b4c8-421b-94f7-4afb421f8169"],
+Cell[890, 29, 207, 4, 52, "Chapter",ExpressionUUID->"e35ab07d-61cc-4a6e-b680-68a34bb54050"],
+Cell[CellGroupData[{
+Cell[1122, 37, 188, 3, 56, "Chapter",ExpressionUUID->"ecbe384c-0958-4c03-bda7-2b5892331eb5"],
+Cell[1313, 42, 631, 12, 64, "Text",ExpressionUUID->"12c9043c-f72c-4651-ba8a-0e7f6b77c00b"],
+Cell[1947, 56, 216, 5, 27, "Text",ExpressionUUID->"01de567f-cf73-4957-a275-e393beddf7e6"],
+Cell[CellGroupData[{
+Cell[2188, 65, 391, 7, 25, "Input",ExpressionUUID->"c34d632a-fba1-4e32-a9d8-cc9cd3cd9f6f"],
+Cell[2582, 74, 262, 6, 28, "Output",ExpressionUUID->"62d86fab-b7d8-40e9-a7ca-efb95466da3f"]
+}, Open  ]],
+Cell[2859, 83, 783, 18, 57, "Input",ExpressionUUID->"58467489-527a-4305-9f30-810baef67e38"],
+Cell[3645, 103, 972, 18, 121, "Input",ExpressionUUID->"dda7a279-60c1-4916-8e39-e554e47c454d"],
+Cell[4620, 123, 216, 5, 27, "Text",ExpressionUUID->"ab744f8d-4260-462e-9ecd-a46673d98132"],
+Cell[4839, 130, 1913, 38, 73, "Input",ExpressionUUID->"9f2d72a6-6285-4f2b-978a-dc0c60cdcdb1"],
+Cell[6755, 170, 210, 4, 38, "Text",ExpressionUUID->"5db6031b-8c1e-4677-a129-a81ad8f39254"],
+Cell[6968, 176, 9696, 207, 617, "Input",ExpressionUUID->"1c311813-1778-48ed-b61f-e8d83399ee40"],
+Cell[16667, 385, 281, 5, 24, "Text",ExpressionUUID->"8dece83f-18ae-4b6f-8c1e-4b528c416321"],
+Cell[16951, 392, 1203, 25, 24, "Input",ExpressionUUID->"258748e8-1e2f-4b42-ac1c-aff65a3f5876"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[18191, 422, 293, 4, 63, "Chapter",ExpressionUUID->"595a7565-0632-4ed6-864b-76156606da60"],
+Cell[18487, 428, 224, 5, 27, "Text",ExpressionUUID->"184d61a4-1f9c-4821-830d-7e845e54cc7d"],
+Cell[18714, 435, 306, 6, 24, "Input",ExpressionUUID->"413785b6-0d47-4939-b519-81e381aff34c"],
+Cell[19023, 443, 308, 6, 24, "Input",ExpressionUUID->"696a1864-730d-4532-a5d1-22240861cc0f"],
+Cell[19334, 451, 442, 9, 25, "Input",ExpressionUUID->"2d756042-811c-4378-91b6-d3ec588eca5c"],
+Cell[19779, 462, 277, 5, 27, "Text",ExpressionUUID->"94165427-ad67-4fa3-9332-2e7ed1d8d616"],
+Cell[20059, 469, 349, 7, 25, "Input",ExpressionUUID->"8c9a8225-bf08-415f-9e99-a3c23e4118b2"],
+Cell[20411, 478, 923, 20, 57, "Input",ExpressionUUID->"225318e6-802f-448c-bba3-02e98dc9cecc"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[21371, 503, 186, 3, 63, "Chapter",ExpressionUUID->"0985e92d-f52b-422f-b367-88beffee5e01"],
+Cell[21560, 508, 356, 7, 27, "Text",ExpressionUUID->"5f1a787f-b33a-4259-b26c-aceefa7011f8"],
+Cell[21919, 517, 195, 4, 24, "Input",ExpressionUUID->"45b812b7-1eb9-4af2-8a79-75d9cd872366"],
+Cell[22117, 523, 607, 13, 24, "Input",ExpressionUUID->"eb2626c8-4ebb-4fd1-813b-0026638449f6"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
